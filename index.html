@@ -1,142 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMD Style UI</title>
-    <style>
-        body {
-            font-family: "Courier New", monospace;
-            background-color: black;
-            color: #00FF00;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            flex-direction: column;
-        }
-        .cmd-box {
-            border: 2px solid #00FF00;
-            padding: 20px;
-            width: 400px;
-            text-align: left;
-            background-color: black;
-        }
-        .cmd-text {
-            font-size: 16px;
-        }
-        .cmd-button {
-            display: block;
-            width: 100%;
-            background: black;
-            color: #00FF00;
-            border: 1px solid #00FF00;
-            font-family: "Courier New", monospace;
-            font-size: 16px;
-            padding: 5px;
-            margin-top: 5px;
-            cursor: pointer;
-            text-align: left;
-        }
-        .cmd-button:hover {
-            background: #00AA00;
-        }
-        .nav-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: black;
-            border: 1px solid #00FF00;
-            color: #00FF00;
-            font-size: 20px;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .nav-menu {
-            display: none;
-            position: absolute;
-            top: 40px;
-            right: 10px;
-            background: black;
-            border: 1px solid #00FF00;
-            padding: 10px;
-            width: 150px;
-        }
-        .nav-menu a, .nav-menu button {
-            color: #00FF00;
-            text-decoration: none;
-            display: block;
-            margin: 5px 0;
-            background: black;
-            border: 1px solid #00FF00;
-            font-family: "Courier New", monospace;
-            font-size: 16px;
-            padding: 5px;
-            cursor: pointer;
-        }
-        .nav-menu a:hover, .nav-menu button:hover {
-            background: #00AA00;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CMD Style UI</title>
+  <style>
+    body {
+      font-family: "Courier New", monospace;
+      background-color: black;
+      color: #00FF00;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    .cmd-box {
+      border: 2px solid #00FF00;
+      padding: 20px;
+      width: 400px;
+      text-align: left;
+      background-color: black;
+    }
+    .cmd-text {
+      font-size: 16px;
+    }
+    .cmd-button {
+      display: block;
+      width: 100%;
+      background: black;
+      color: #00FF00;
+      border: 1px solid #00FF00;
+      font-family: "Courier New", monospace;
+      font-size: 16px;
+      padding: 5px;
+      margin-top: 5px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .cmd-button:hover {
+      background: #00AA00;
+    }
+    .nav-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: black;
+      border: 1px solid #00FF00;
+      color: #00FF00;
+      font-size: 20px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .nav-menu {
+      display: none;
+      position: absolute;
+      top: 40px;
+      right: 10px;
+      background: black;
+      border: 1px solid #00FF00;
+      padding: 10px;
+      width: 150px;
+    }
+    .nav-menu a, .nav-menu button {
+      color: #00FF00;
+      text-decoration: none;
+      display: block;
+      margin: 5px 0;
+      background: black;
+      border: 1px solid #00FF00;
+      font-family: "Courier New", monospace;
+      font-size: 16px;
+      padding: 5px;
+      cursor: pointer;
+    }
+    .nav-menu a:hover, .nav-menu button:hover {
+      background: #00AA00;
+    }
+  </style>
 </head>
 <body>
-    <button class="nav-button" onclick="toggleMenu()">☰</button>
-    <div class="nav-menu" id="navMenu">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Settings</a>
-        <button id="disconnectWallet" class="cmd-button" style="display:none;">Disconnect Wallet</button>
-    </div>
-    <div class="cmd-box">
-        <p class="cmd-text" id="cmdText">C:\Users\Guest> Welcome to the CMD UI</p>
-        <p class="cmd-text">Choose a command:</p>
-        <button id="connectWallet" class="cmd-button"></button>
-    </div>
-    <script>
-        window.onload = function () {
-            let isConnected = false;
+  <button class="nav-button" onclick="toggleMenu()">☰</button>
+  <div class="nav-menu" id="navMenu">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Settings</a>
+    <button id="disconnectWallet" class="cmd-button" style="display:none;">Disconnect Wallet</button>
+  </div>
+  <div class="cmd-box">
+    <p class="cmd-text" id="cmdText">C:\Users\Guest> Welcome to the CMD UI</p>
+    <p class="cmd-text">Choose a command:</p>
+    <button id="connectWallet" class="cmd-button">Connect Wallet</button>
+  </div>
 
-            function toggleMenu() {
-                const menu = document.getElementById("navMenu");
-                menu.style.display = (menu.style.display === "block") ? "none" : "block";
-            }
+  <script>
+    window.onload = function () {
+      let isConnected = false;
 
-            document.querySelector(".nav-button").addEventListener("click", toggleMenu);
+      function toggleMenu() {
+        const menu = document.getElementById("navMenu");
+        menu.style.display = (menu.style.display === "block") ? "none" : "block";
+      }
 
-            const connectBtn = document.getElementById("connectWallet");
-            const disconnectBtn = document.getElementById("disconnectWallet");
+      document.querySelector(".nav-button").addEventListener("click", toggleMenu);
 
-            connectBtn.addEventListener("click", function () {
-                if (!isConnected) {
-                    if (typeof window.ethereum !== 'undefined') {
-                        window.ethereum.request({ method: 'eth_requestAccounts' })
-                            .then(accounts => {
-                                isConnected = true;
-                                document.getElementById("cmdText").innerText = "C:\\Users\\Guest> Wallet Connected";
-                                disconnectBtn.style.display = "block";
-                                connectBtn.onclick = null; // disable action after connect
-                                alert("Wallet connected: " + accounts[0]);
-                            })
-                            .catch(error => {
-                                console.error(error);
-                                alert("Failed to connect wallet.");
-                            });
-                    } else {
-                        alert("MetaMask is not installed.");
-                    }
-                }
-            });
+      const connectBtn = document.getElementById("connectWallet");
+      const disconnectBtn = document.getElementById("disconnectWallet");
 
-            disconnectBtn.addEventListener("click", function () {
-                isConnected = false;
-                document.getElementById("cmdText").innerText = "C:\\Users\\Guest> Welcome to the CMD UI";
-                disconnectBtn.style.display = "none";
-                connectBtn.onclick = null;
-                connectBtn.addEventListener("click", function () {}); // no function after disconnect
-                alert("Wallet disconnected.");
-            });
-        };
-    </script>
-</body>
-</html>
+      connectBtn.addEventListener("click", function () {
+        if (!isConnected) {
+          if (typeof window.ethereum !== 'undefined') {
+            window.ethereum.request({ method: 'eth_requestAccounts' })
+              .then(accounts => {
+                isConnected = true;
+                document.getElementById("cmdText").innerText = "C
