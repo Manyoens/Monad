@@ -81,7 +81,7 @@
   </style>
 </head>
 <body>
-  <button class="nav-button" onclick="toggleMenu()">☰</button>
+  <button class="nav-button" id="menuToggle">☰</button>
   <div class="nav-menu" id="navMenu">
     <a href="#">Home</a>
     <a href="#">About</a>
@@ -95,23 +95,44 @@
   </div>
 
   <script>
-    window.onload = function () {
-      let isConnected = false;
+    let isConnected = false;
 
-      function toggleMenu() {
-        const menu = document.getElementById("navMenu");
-        menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.getElementById("navMenu");
+    const connectBtn = document.getElementById("connectWallet");
+    const disconnectBtn = document.getElementById("disconnectWallet");
+    const cmdText = document.getElementById("cmdText");
+
+    menuToggle.addEventListener("click", () => {
+      navMenu.style.display = (navMenu.style.display === "block") ? "none" : "block";
+    });
+
+    connectBtn.addEventListener("click", () => {
+      if (isConnected) return; // Button does nothing after connected
+
+      if (typeof window.ethereum !== 'undefined') {
+        window.ethereum.request({ method: 'eth_requestAccounts' })
+          .then(accounts => {
+            isConnected = true;
+            cmdText.innerText = "C:\\Users\\Guest> Wallet Connected";
+            disconnectBtn.style.display = "block";
+            alert("Wallet connected: " + accounts[0]);
+          })
+          .catch(error => {
+            console.error(error);
+            alert("Failed to connect wallet.");
+          });
+      } else {
+        alert("MetaMask is not installed.");
       }
+    });
 
-      document.querySelector(".nav-button").addEventListener("click", toggleMenu);
-
-      const connectBtn = document.getElementById("connectWallet");
-      const disconnectBtn = document.getElementById("disconnectWallet");
-
-      connectBtn.addEventListener("click", function () {
-        if (!isConnected) {
-          if (typeof window.ethereum !== 'undefined') {
-            window.ethereum.request({ method: 'eth_requestAccounts' })
-              .then(accounts => {
-                isConnected = true;
-                document.getElementById("cmdText").innerText = "C
+    disconnectBtn.addEventListener("click", () => {
+      isConnected = false;
+      cmdText.innerText = "C:\\Users\\Guest> Welcome to the CMD UI";
+      disconnectBtn.style.display = "none";
+      alert("Wallet disconnected.");
+    });
+  </script>
+</body>
+</html>
