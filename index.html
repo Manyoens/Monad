@@ -1,37 +1,44 @@
 <script>
-    let isConnected = false;
+    window.onload = function () {
+        let isConnected = false;
 
-    function toggleMenu() {
-        const menu = document.getElementById("navMenu");
-        menu.style.display = (menu.style.display === "block") ? "none" : "block";
-    }
-
-    document.getElementById("connectWallet").addEventListener("click", function () {
-        if (!isConnected) {
-            if (typeof window.ethereum !== 'undefined') {
-                window.ethereum.request({ method: 'eth_requestAccounts' })
-                    .then(accounts => {
-                        isConnected = true;
-                        document.getElementById("cmdText").innerText = "C:\\Users\\Guest> Wallet Connected";
-                        document.getElementById("disconnectWallet").style.display = "block";
-                        document.getElementById("connectWallet").disabled = true; // 🔒 disable button
-                        alert("Wallet connected: " + accounts[0]);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        alert("Failed to connect wallet.");
-                    });
-            } else {
-                alert("MetaMask is not installed.");
-            }
+        function toggleMenu() {
+            const menu = document.getElementById("navMenu");
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
         }
-    });
 
-    document.getElementById("disconnectWallet").addEventListener("click", function () {
-        isConnected = false;
-        document.getElementById("cmdText").innerText = "C:\\Users\\Guest> Welcome to the CMD UI";
-        document.getElementById("disconnectWallet").style.display = "none";
-        document.getElementById("connectWallet").disabled = false; // ✅ re-enable button
-        alert("Wallet disconnected.");
-    });
+        document.querySelector(".nav-button").addEventListener("click", toggleMenu);
+
+        const connectBtn = document.getElementById("connectWallet");
+        const disconnectBtn = document.getElementById("disconnectWallet");
+
+        connectBtn.addEventListener("click", function () {
+            if (!isConnected) {
+                if (typeof window.ethereum !== 'undefined') {
+                    window.ethereum.request({ method: 'eth_requestAccounts' })
+                        .then(accounts => {
+                            isConnected = true;
+                            document.getElementById("cmdText").innerText = "C:\\Users\\Guest> Wallet Connected";
+                            disconnectBtn.style.display = "block";
+                            connectBtn.disabled = true; // Disable after connect
+                            alert("Wallet connected: " + accounts[0]);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            alert("Failed to connect wallet.");
+                        });
+                } else {
+                    alert("MetaMask is not installed.");
+                }
+            }
+        });
+
+        disconnectBtn.addEventListener("click", function () {
+            isConnected = false;
+            document.getElementById("cmdText").innerText = "C:\\Users\\Guest> Welcome to the CMD UI";
+            disconnectBtn.style.display = "none";
+            connectBtn.disabled = false; // Re-enable connect button
+            alert("Wallet disconnected.");
+        });
+    };
 </script>
